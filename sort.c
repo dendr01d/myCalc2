@@ -50,6 +50,14 @@ void radixSort(int array[], int length) {
             array[counter] = &zP;
             ++counter;
         }
+        
+        //debug output
+        #ifdef DEBUG
+            for (int j = 0; j < length; ++j) {
+                printf("%-3d", array[j];
+            }
+            printf("\n");
+        #endif
     }
 
 }
