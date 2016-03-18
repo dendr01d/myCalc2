@@ -2,6 +2,14 @@
 
 using namespace std;
 
+void printList(int array[], int length) {
+    for (int j = 0; j < length; ++j) {
+        printf("%-3d", array[j];
+    }
+    printf("\n");
+}
+
+
 void radixSort(int array[], int length) {
     //for every digit in an int (32 of them)
     for (int i = 1; i < INT_MAX; i *= 2) {
@@ -53,10 +61,7 @@ void radixSort(int array[], int length) {
         
         //debug output
         #ifdef DEBUG
-            for (int j = 0; j < length; ++j) {
-                printf("%-3d", array[j];
-            }
-            printf("\n");
+            printList(array, length);
         #endif
     }
 
