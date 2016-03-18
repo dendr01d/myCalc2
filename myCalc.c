@@ -33,8 +33,11 @@ int main (int argc, char *argv[]) {
     else if (strcmp(argv[1], "pow") == 0) {
         printf("%d\n", myPow(a, b));
     }
+    else if (strcmp(argv[1], "mod") == 0) {
+        printf("%d\n", a % b);
+        
     else {
-        printf("usage: myCalc <add/sub/mul/div/pow> a b\n");
+        printf("usage: myCalc <add/sub/mul/div/pow/mod> a b\n");
 	exit(1);
     }  
 
