@@ -35,7 +35,7 @@ int main (int argc, char *argv[]) {
     }
     else if (strcmp(argv[1], "mod") == 0) {
         printf("%d\n", a % b);
-        
+    }
     else {
         printf("usage: myCalc <add/sub/mul/div/pow/mod> a b\n");
 	exit(1);
