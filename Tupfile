@@ -1,0 +1,9 @@
+FLAGS-@(MYPROJ_DEBUG) += -Og
+FLAGS-@(MYPROJ_DEBUG) += -DDEBUG
+
+FLAGS-@(MYPROJ_DEFAULT) += -O3
+FLAGS-@(MYPROJ_DEFAULT) += -flto
+FLAGS-@(MYPROJ_DEFAULT) += -DNDEBUG
+
+: foreach *.c |> gcc $(FLAGS-y) -Wall -Werror -c %f -o %o |> %B.o
+: *.o |> gcc %f -o %o |> myCalc

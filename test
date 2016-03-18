@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "Debug mode: 2 + 2"
+build-debug/myCalc add 2 2
+
+echo "Default mode: 2 + 2"
+build-default/myCalc add 2 2
