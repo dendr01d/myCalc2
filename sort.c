@@ -19,17 +19,15 @@ void printMaskedList(int array[], int length, int mask) {
 
 void radixSort(int array[], int length) {
     //here are some buckets, their (nominal) sizes, and an index holder
-    int* bucket0 = malloc(length * sizeof(bucket0));
-    int* bucket1 = malloc(length * sizeof(bucket1));
+    int *bucket0 = malloc(length * sizeof(bucket0));
+    int *bucket1 = malloc(length * sizeof(bucket1));
     int size0 = 0;
     int size1 = 0;
     int ind0 = 0;
     int ind1 = 0;
-    
-    int mask = 1;
 
-    //for every digit in an int (32 of them)
-    for (int i = 0; i < 32; ++i) {
+    //for every digit in an int (the bitmask's bit will eventually be shifted off)
+    for (unsigned int i = 1; i != 0; i <<= 1) {
         
         
         //use bit masking to see what the current digit is and count them
@@ -49,7 +47,7 @@ void radixSort(int array[], int length) {
         ind1 = 0;
         for (int j = 0; j < length; ++j) {
             if ((array[j] & i) == 0) {
-                bucket0[ind1] = array[j];
+                bucket0[ind0] = array[j];
                 ++ind0;
             }
             else {
@@ -65,7 +63,8 @@ void radixSort(int array[], int length) {
         int counter = 0;
         
         #ifdef DEBUG
-            printf("\n0 Bucket: ");
+            printf("\nMask: %d\n", i);
+            printf("0 Bucket: ");
         #endif
         for (int j = 0; j < size0; ++j) {
             array[counter] = bucket0[ind0];
@@ -89,13 +88,10 @@ void radixSort(int array[], int length) {
         
         //debug output
         #ifdef DEBUG
-            printf("\nMask: %d\n", mask);
+            printf("\n");
             printList(array, length);
-            printMaskedList(array, length, mask);
+            //printMaskedList(array, length, i);
         #endif
-        
-        //increment the mask
-        mask <<= 1;
     }
         
     //clear the buckets
