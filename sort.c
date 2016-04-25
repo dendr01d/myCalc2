@@ -2,6 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+//why didn't I just use c++ x_x
+int MAX_LIST_LENGTH = 100;
+
+
 void printList(int array[], int length) {
     for (int j = 0; j < length; ++j) {
         printf("%-3d", array[j]);
@@ -9,56 +14,45 @@ void printList(int array[], int length) {
     printf("\n");
 }
 
+static int getBit(int n, int bit) {
+    //right shift and then eliminate all but 1 bit
+    return ((n >> bit) & 0x1); 
+}
+
 void radixSort(int array[], int length) {
-    //here are some buckets, their (nominal) sizes, and an index holder
-    int *bucket0 = malloc(length * sizeof(bucket0));
-    int *bucket1 = malloc(length * sizeof(bucket1));
-    int size0 = 0;
-    int size1 = 0;
-
-    //for every digit in an int (the bitmask's bit will eventually be shifted off the end)
-    for (unsigned int i = 1; i != 0; i <<= 1) {
+    //shadow array
+    int shadow[MAX_LIST_LENGTH];
+    int ind = 0;
+    
+    for (int i = 0; i < 32; ++i) {
+        ind = 0;
         
-        //use bit masking to count and sort each number into buckets
-        size0 = 0;
-        size1 = 0;
+        //first copy all the numbers where bit i is 0
+        //  into the shadow array
         for (int j = 0; j < length; ++j) {
-            if ((array[j] & i) == 0) {
-                bucket0[j - size1] = array[j];
-                ++size0;
-            }
-            else {
-                bucket1[j - size0] = array[j];
-                ++size1;
+            if (getBit(array[j], i) == 0) {
+                shadow[ind] = array[j];
+                ++ind;
             }
         }
         
-        //copy the numbers back into the original array
-        int counter = 0;
-        
-        for (int j = 0; j < size0; ++j) {
-            array[counter] = bucket0[j];
-            ++counter;
-        }
-        for (int j = 0; j < size1; ++j) {
-            array[counter] = bucket1[j];
-            ++counter;
+        //if we copied either ALL or NONE of them, then this bit
+        //  won't help us sort and we might as well skip to the next round
+        if (ind == 0 || ind == length) {
+            continue;
         }
         
-        //debug output
-        #ifdef DEBUG
-            printf("\n\nMask: %d\n", i);
-            printf("0 Bucket: ");
-            printList(bucket0, size0);
-            printf("1 Bucket: ");
-            printList(bucket1, size1);
-            printf("\n");
-            printList(array, length);
-        #endif
+        //now do the ones where the bit is 1
+        for (int j = 0; j < length; ++j) {
+            if (getBit(array[j], i) == 1) {
+                shadow[ind] = array[j];
+                ++ind;
+            }
+        }
+        
+        //now copy them all back
+        for (int j = 0; j < length; ++j) {
+            array[j] = shadow[j];
+        }   
     }
-        
-    //clear the buckets
-    free(bucket0);
-    free(bucket1);
-
 }
