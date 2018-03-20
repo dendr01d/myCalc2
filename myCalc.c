@@ -4,6 +4,7 @@
 
 #include "pow.h"
 #include "sort.h"
+#include "fact.h"
 
 #define ADD 0
 #define SUB 1
@@ -12,15 +13,16 @@
 #define POW 4
 #define MOD 5
 #define SORT 6
+#define FACT 7
 
-#define OPTIONS 7
+#define OPTIONS 8
 
 //operations can only be 4 letters long
-static const char options[][5] = { {"add"}, {"sub"}, {"mul"}, {"div"}, {"pow"}, {"mod"}, {"sort"}};
+static const char options[][5] = { {"add"}, {"sub"}, {"mul"}, {"div"}, {"pow"}, {"mod"}, {"sort"}, {"fact"}};
 
 void printUsage() {
-    printf("Usage: myCalc <operation> a b (c, d, e...)\n");
-    printf("Operations: add, sub, mul, div, pow, mod, sort\n");
+    printf("Usage: myCalc <operation> a [b c, d, e...]\n");
+    printf("Operations: add, sub, mul, div, pow, mod, sort, fact\n");
 	exit(1);
 }
 
@@ -34,7 +36,7 @@ int whichOption(char *str){
 }
 
 int main (int argc, char *argv[]) {
-    if (argc < 4) {
+    if (argc < 3) {
 	    printUsage();
     }
 
@@ -82,6 +84,10 @@ int main (int argc, char *argv[]) {
             #endif
             radixSort(array, argc - 2);
             printList(array, argc - 2);
+            break;
+        
+        case FACT:
+            factor(a);
             break;
         
         default:

@@ -1,0 +1,1 @@
+void factor(int n);
